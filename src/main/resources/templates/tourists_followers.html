@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Followers</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/loading.css" rel="stylesheet">
+    <link href="css/ifTip.css" rel="stylesheet">
+    <link href="css/warningTip.css" rel="stylesheet">
+    <link href="css/followers.css" rel="stylesheet">
+</head>
+
+<style type="text/css">
+    [v-cloak] {
+        display: none;
+    }
+</style>
+
+<body>
+<div id="followers" v-cloak>
+    <div class="user_info_div"  >
+        <div class="user_info_div_title">
+            <marquee scrollamount="3">Tips:Account can't be set to pricate
+              </marquee>
+        </div>
+       <div class="user_info_div_following">
+           <SPAN class="user_info_div_following_span">0</SPAN>
+           <p>Following</p>
+       </div>
+        <div class="user_info_div_followers">
+            <SPAN class="user_info_div_following_span">0</SPAN>
+            <p>Followers</p>
+        </div>
+        <div class=" user_info_div_photo" >
+            <img  src="img/tourists.png" class="img-circle user_info_div_photo_img">
+            <p>name</p>
+        </div>
+    </div>
+
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item li_carousel">
+                <div id="myCarousel" class="carousel slide" data-slide-to="2" data-ride="carousel">
+                    <!-- 轮播（Carousel）指标 -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                        <li data-target="#myCarousel" data-slide-to="3"></li>
+                    </ol>
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="img/title1.png" alt="First slide">
+                        </div>
+                        <div class="item">
+                            <img src="img/title2.png" alt="Second slide" @click="carousel_Img('vip')">
+                        </div>
+                        <div class="item">
+                            <img src="img/title3.png" alt="third slide"@click="carousel_Img('vip')">
+                        </div>
+                        <div class="item">
+                            <img src="img/title4.png" alt="four slide"@click="carousel_Img('store')">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </li>
+        </ul>
+
+    </div>
+    <div class="div_gold_info">
+        <ul class="list-group">
+            <li class="list-group-item  div_gold first-child" v-for='item in followerListArr1'>
+               <div @click="openTip()">
+                    <span class="div_gold_span" data-toggle="modal">
+                      <img src="img/gold.png" class="img_gold">
+                        {{item.gold_quantity}}
+                    </span>
+                    <img src="img/bicon.png"class="img_people">
+                    <span class="img_people_interval">
+                    +{{item.goods_quantity}} Followers
+                    </span>
+                    <span v-if="item.is_hot==1">
+                        <img src="img/hot.png"class="img_hot">
+                    </span>
+               </div>
+            </li>
+
+
+
+            <li class="list-group-item  div_gold first-child initialOpen">
+                <div>
+                    <span class="div_gold_span" data-toggle="modal">
+                      <img src="img/gold.png" class="img_gold">
+                        100
+                    </span>
+                    <img src="img/bicon.png"class="img_people">
+                    <span class="img_people_interval">
+                    +10 Followers
+                    </span>
+                </div>
+            </li>
+
+            <li class="list-group-item  div_gold first-child initialOpen">
+                <div>
+                    <span class="div_gold_span" data-toggle="modal">
+                      <img src="img/gold.png" class="img_gold">
+                       500
+                    </span>
+                    <img src="img/bicon.png"class="img_people">
+                    <span class="img_people_interval">
+                    +50 Followers
+                    </span>
+                </div>
+            </li>
+
+            <li class="list-group-item  div_gold first-child initialOpen">
+                <div>
+                    <span class="div_gold_span" data-toggle="modal">
+                      <img src="img/gold.png" class="img_gold">
+                        1000
+                    </span>
+                    <img src="img/bicon.png"class="img_people">
+                    <span class="img_people_interval">
+                    +110 Followers
+                    </span>
+                    <span>
+                        <img src="img/hot.png"class="img_hot">
+                    </span>
+                </div>
+            </li>
+
+            <li class="list-group-item  div_gold first-child initialOpen">
+                <div>
+                    <span class="div_gold_span" data-toggle="modal">
+                      <img src="img/gold.png" class="img_gold">
+                        5000
+                    </span>
+                    <img src="img/bicon.png"class="img_people">
+                    <span class="img_people_interval">
+                     +500 Followers
+                    </span>
+                </div>
+            </li>
+            <li class="list-group-item  div_gold first-child initialOpen">
+                <div>
+                    <span class="div_gold_span" data-toggle="modal">
+                      <img src="img/gold.png" class="img_gold">
+                        10000
+                    </span>
+                    <img src="img/bicon.png"class="img_people">
+                    <span class="img_people_interval">
+                    +1200 Followers
+                    </span>
+                    <span>
+                        <img src="img/hot.png"class="img_hot">
+                    </span>
+                </div>
+            </li>
+
+            <li class="list-group-item  div_gold first-child initialOpen">
+                <div>
+                    <span class="div_gold_span" data-toggle="modal">
+                      <img src="img/gold.png" class="img_gold">
+                        50000
+                    </span>
+                    <img src="img/bicon.png"class="img_people">
+                    <span class="img_people_interval">
+                    +5000 Followers
+                    </span>
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- loading -->
+    <div class="modal fade loading_div"  id="loading"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop='static'>
+        <div class="modal-body loading_text">
+            <img src="img/loading.gif">
+        </div>
+    </div>
+</div>
+
+
+<script src="js/jquery-2.0.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+<script>
+
+    //刷新页面
+    function reloadPage() {
+        app.followerServiceInfo();
+    }
+
+
+
+
+
+ var  app= new Vue({
+               el:'#followers',
+              data:{
+                  user_name:'',
+                  user_id:'',
+                  package_name:'',
+                  followerListArr1:[],
+                  follower_count:'',
+                  following_count:'',
+                  profile_pic_url:'',
+                  goodsNumber:'',
+                  gold:'',
+                  goodQuatity:'',
+                  good_id:'',
+                  result_buy:'',
+                  no_Gold_Tag:''
+              },
+     created: function () {
+         //初始化参数
+         var str = window.location.search;
+         str = str.replace('?', '');
+         var params = str.split('&');
+         var requests = {}
+
+         for (var i = 0; i < params.length; i++) {
+             if (params[i].indexOf("=")) {
+                 var tmp = params[i].split("=");
+                 requests[tmp[0]] = tmp[1];
+             }
+         }
+         // 返回 undefinde 说明没有对应的key
+         // 返回 '' 说明对应的值为空 但是有 key
+         this.package_name = requests['package_name'];
+         this.user_id = requests['user_id'];
+         this.user_name = requests['user_name'];
+     },
+
+     mounted: function () {
+         this.followerServiceInfo();
+     },
+     methods:{
+         //服务列表
+         followerServiceInfo: function () {
+             $('#loading').modal('show');
+             var package_name = this.package_name;
+             var type = "1";
+             axios.get('/serviceList?package_name='+package_name+"&type="+type).then(function (res) {
+                 if(res.data.status=='1'){
+                 var followerListArr1 = res.data.data;
+                 app.followerListArr1 = followerListArr1;
+                 $('.initialOpen').hide();
+                 }else{
+                     app.followerListArr1="";
+                     app.result_buy=res.data.info
+                     $('#tipMoal').modal('show');
+                 };
+                 $('#loading').modal('hide');
+             }).catch(function (error) {
+                 console.log(error);
+             });
+         },
+
+         openTip:function(){
+             var message = {
+                 'name': 'login',
+             };
+             window.webkit.messageHandlers.webViewApp.postMessage(message);
+         },
+         carousel_Img:function(name){
+             if(name=='vip'){
+                 var message = {
+                     'name': 'vip',
+                 };
+                 window.webkit.messageHandlers.webViewApp.postMessage(message);
+             }else if(name=='store'){
+                 var message = {
+                     'name': 'store',
+                 };
+                 window.webkit.messageHandlers.webViewApp.postMessage(message);
+             }
+
+         }
+
+     }
+
+ })
+
+</script>
+
+</body>
+</html>

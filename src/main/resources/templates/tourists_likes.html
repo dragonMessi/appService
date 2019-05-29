@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="zh-CN">
+<test>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>likes</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/ifTip.css" rel="stylesheet">
+    <link href="css/warningTip.css" rel="stylesheet">
+    <link href="css/loading.css" rel="stylesheet">
+</test>
+
+<style>
+.div_bk{
+    text-align: center;
+}
+* {
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+</style>
+
+
+<body>
+<div  class="div_bk" id="login" @click="touristsLogin()">
+<img src="img/tourists_likes.png" style="background: no-repeat;width: 100%;height: 100%">
+</div>
+<script src="js/jquery-2.0.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+<script>
+
+    var  app= new Vue({
+        el: '#login',
+        data: {
+
+        },
+        created: function () {
+        },
+
+        mounted: function () {
+        },
+        methods: {
+            //游客登陆
+            touristsLogin :function(){
+                var message = {
+                    'name': 'login',
+                };
+                window.webkit.messageHandlers.webViewApp.postMessage(message);
+
+            },
+
+        }
+
+
+
+    })
+
+</script>
+
+</body>
+</html>

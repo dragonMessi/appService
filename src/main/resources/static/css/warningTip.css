@@ -1,0 +1,17 @@
+
+
+.warning_btn_ok{
+    width: 8rem!important;
+    background-color: #FF8EC1!important;
+    border-radius:0.5rem!important;
+    border: none!important;
+    color: white;
+}
+.warning_model_foot{
+    text-align: center;
+    border: none!important;
+}
+#tipMoal{
+position: absolute;top:30%;
+
+}

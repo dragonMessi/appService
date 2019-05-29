@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="zh-CN">
+<test>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>likes</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/ifTip.css" rel="stylesheet">
+    <link href="css/warningTip.css" rel="stylesheet">
+    <link href="css/loading.css" rel="stylesheet">
+</test>
+
+<style>
+.likes_img{
+    width: 10rem;height:10rem;
+
+}
+.likes_img_Under{
+    width: 1.6rem;height:1.6rem;
+}
+
+    .body_div{
+      text-align: center;
+
+    }
+    .likes_img_head{
+        width:7rem;height: 7rem
+    }
+.img_people{
+    width:2rem;height: 2rem;
+}
+
+.img_people_interval{
+    position: relative;left: 1.5rem;
+}
+.img_gold{
+    width:2rem;height: 2rem
+}
+.loading_model{
+    text-align: center;
+    height: 100%;
+}
+
+
+    .modal_data_show{
+        width: 65%;position:relative;left:9.6rem;top:-6rem
+    }
+    .div_gold{
+        background-color:#E2F2FF;
+        border-radius:1rem!important;
+        margin-bottom: 0.3rem;
+        font-size: 18px;
+        border:none;
+    }
+.img_hot{
+    width:2.5rem;height: 2.5rem;
+    position: relative;left: 2.9rem;
+}
+.div_title{
+    text-align: center;
+    font-weight: bold;
+    height: 3rem;
+    margin-top: 1.5rem;
+}
+   .div_gold_span{
+        float: right;
+        color: #E797C2;
+    }
+.modal-backdrop {
+    opacity: 0 !important;
+    filter: alpha(opacity=0) !important;
+}
+    .gold_VIEWS_span{
+        color: #3582F0;
+    }
+.gold_likes_span{
+    color: #3582F0;
+}
+    .gold_likes_views_div{
+        font-size: 23px;
+        height: 4.5rem;
+        text-align: center;
+    }
+    .gold_btn_div{
+        text-align: center;
+        border: none;
+        padding: 0px!important;
+    }
+    .gold_btn{
+        border: none;
+    }
+    .gold_btn img{
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    .modal-body{
+        padding: 0px!important;
+    }
+
+* {
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+#goldModal {
+position: absolute;top: 6%;
+    width: 90%;
+}
+    .common_likes_span{
+     position: relative;right: 2rem;
+    }
+    .common_views_span{
+    position: relative;left: 2rem;
+}
+    #yesOrNoModel{
+        z-index:20;
+    }
+[v-cloak] {
+    display: none;
+}
+</style>
+
+<body>
+<div>
+    <div id="likes" class="container" v-cloak>
+        <div class="div_title">Choose photo/video to get likes/views</div>
+        <div class="row body_div">
+         <div class="col-xs-4" v-for='item in likesListArr' style="padding-right:0.1rem!important;padding-left:0.1rem!important;">
+            <div>
+              <span>
+                 <IMG :src="item.url" class="likes_img" @click="openModel(item)">
+             </span>
+            </div>
+             <div>
+                  <span>
+                        <IMG src="img/like.png" class="likes_img_Under">
+                        <span v-if="item.ifLength=='0'">{{item.likes}}</span>
+                        <span v-if="item.ifLength=='1'" style="font-size: 9px">{{item.likes}}</span>
+                    </span>
+
+
+                <span v-if="item.video_view_count>0">
+                      <IMG src="img/eye.png" class="likes_img_Under">
+                      <span v-if="item.ifLength=='0'">{{item.video_view_count}}</span>
+                      <span v-if="item.ifLength=='1'"style="font-size: 9px">{{item.video_view_count}}</span>
+                </span>
+             </div>
+         </div>
+
+    </div>
+
+
+
+
+
+        <!-- 模态框显示购买金币列表 -->
+        <div class="" id="goldModal"  role="dialog" aria-labelledby="myModalLabel" style="display: none">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+
+                       <!--Likes -->
+                    <div class="modal-body" id="gold_model_likes">
+                        <div class="gold_likes_views_div">
+                            <span class="gold_likes_span common_likes_span" >Get Likes</span>
+                            <span  @click="viewsSHowOrHide()" class="common_views_span"  style="color: #99CFFC">Get Views</span>
+                        </div>
+                        <ul class="list-group" >
+                            <li class="list-group-item div_gold" v-for='item in likesStoreList'>
+                                <div @click="getGoldId(item)">
+                                    <span class="div_gold_span" data-toggle="modal">
+                                      <img src="img/gold.png" class="img_gold">
+                                        {{item.gold_quantity}}
+                                    </span>
+                                    <img src="img/like.png"class="img_people" v-if="item.type=='2'">
+                                    <img src="img/eye.png"class="img_people" v-if="item.type=='3'">
+                                    <span class="img_people_interval">
+                                    +{{item.goods_quantity}}  Likes
+                                    </span>
+                                    <span v-if="item.is_hot==1">
+                                        <img src="img/hot.png"class="img_hot">
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                        <!--views -->
+                        <div class="modal-body" style="display: none" id="gold_model_views">
+                            <div class="gold_likes_views_div">
+                                <span @click="likesSHowOrHide()" class="common_likes_span" style="color: #99CFFC">Get Likes</span>
+                                <span class="gold_VIEWS_span common_views_span">Get Views</span>
+                            </div>
+                            <ul class="list-group">
+
+                                <div v-if="viewsStoreList==''" style="height: 33.6rem;text-align: center;"><img src="img/viewImg.png" style="width: 50%;height: 50%;position: relative;top: 30%;"></div>
+                                <li class="list-group-item div_gold" v-for='item in viewsStoreList'>
+                                    <div @click="getGoldId(item)">
+                                        <span class="div_gold_span" data-toggle="modal">
+                                          <img src="img/gold.png" class="img_gold">
+                                            {{item.gold_quantity}}
+                                        </span>
+                                            <img src="img/like.png"class="img_people" v-if="item.type=='2'">
+                                            <img src="img/eye.png"class="img_people" v-if="item.type=='3'">
+                                            <span class="img_people_interval">
+                                        +{{item.goods_quantity}}  likes
+                                        </span>
+                                            <span v-if="item.is_hot==1">
+                                            <img src="img/hot.png"class="img_hot">
+                                        </span>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    <div class="modal-footer gold_btn_div">
+                        <button type="button" class="btn btn-default gold_btn" data-dismiss="modal"@click="colseModal('x')">
+                            <img src="img/cha.png">
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+    </div>
+
+
+
+
+
+        <!-- 确认是否购买 -->
+        <div class="if_mode_all" id="yesOrNoModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header if_model_head">
+                        <h3 class="modal-title if_model_h4" id="myModalLabel">
+                            Buy {{model_title}}
+                        </h3>
+                    </div>
+                    <div class="modal-body if_model_text">
+                        Confirm buy {{goodsNumber}}
+                        {{model_title}}
+                    </div>
+                    <div class="modal-footer if_model_foot">
+
+                        <button type="button" class="btn btn-default if_btn_cancle"  data-dismiss="modal" @click="colseModal('no')">
+                            NO
+                        </button>
+
+                        <button type="button" class="btn btn-default if_btn_ok" data-dismiss="modal" @click="getLikes()">
+                           YES
+                        </button>
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <!-- loading -->
+        <div class="modal fade loading_div"  id="loading"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop='static'>
+            <div class="modal-body loading_text">
+                <img src="img/loading.gif">
+            </div>
+        </div>
+
+
+        <!-- 提示框 -->
+        <div class="if_mode_all" id="tipMoal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header if_model_head">
+                        <h3 class="modal-title if_model_h4" id="myModalLabel">
+                            Tips
+                        </h3>
+                    </div>
+                    <div class="modal-body if_model_text">
+                        {{result_buy}}
+                    </div>
+                    <div class="modal-footer warning_model_foot">
+                        <button type="button" class="btn btn-default warning_btn_ok" data-dismiss="modal" @click="noGold(no_Gold_Tag)">
+                            OK
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+
+   </div>
+</div>
+
+<script src="js/jquery-2.0.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+        <script>
+
+          //   $(window).scroll(function () {
+          //       var scrollTop = $(this).scrollTop();//顶部到滚动条距离
+          //       var scrollHeight = $(document).height();//窗口大小
+          //       var windowHeight = $(this).height();//屏幕大小
+          //       var long = scrollHeight - scrollTop - windowHeight;
+          // if(long<20){
+          //     // console.log("scrollTop:"+scrollTop+"===顶部到滚动条距离===");
+          //     // console.log("scrollHeight:"+scrollHeight+"===窗口大小距离===");
+          //     // console.log("windowHeight:"+windowHeight+"===屏幕大小距离===");
+          //     console.log("通知IOSAPP去执行上传");
+          //    // 通知APP
+          //     var message = {
+          //         'name': 'loadMore',
+          //         'post_id': app.max_id
+          //     };
+          //     window.webkit.messageHandlers.webViewApp.postMessage(message);
+          //
+          //     //获取新数据,测试用
+          //    // app.loadMorePage();
+          // }
+          //   });
+
+
+            //刷新
+            function reloadPage() {
+                app.userInfo();
+            }
+
+
+
+
+            var  app= new Vue({
+                el: '#likes',
+                data: {
+                    user_name: '',
+                    user_id: '',
+                    package_name: '',
+                    likesListArr: [],
+                    profile_pic_url: '',
+                    goodsNumber: '',
+                    gold: '',
+                    goodQuatity: '',
+                    good_id: '',
+                    max_id: '',
+                    model_url:'',
+                    model_likes:'',
+                    model_video_view_count:'',
+                    model_comments:'',
+                    model_type:'',
+                    model_shortcode:'',
+                    model_mediaId:'',
+                    likesStoreList:[],
+                    viewsStoreList:[],
+                    goodsNumber:'',
+                    goodQuatity:'',
+                    good_id:'',
+                    result_buy:'',
+                    click_type:'',
+                    no_Gold_Tag:'',
+                    model_title:'',
+                    if_model_title:'1',
+                },
+                created: function () {
+                    //初始化参数
+                    var str = window.location.search;
+                    str = str.replace('?', '');
+                    var params = str.split('&');
+                    var requests = {}
+
+                    for (var i = 0; i < params.length; i++) {
+                        if (params[i].indexOf("=")) {
+                            var tmp = params[i].split("=");
+                            requests[tmp[0]] = tmp[1];
+                        }
+                    }
+                    // 返回 undefinde 说明没有对应的key
+                    // 返回 '' 说明对应的值为空 但是有 key
+                    this.package_name = requests['package_name'];
+                    this.user_id = requests['user_id'];
+                    this.user_name = requests['user_name'];
+                },
+
+                mounted: function () {
+                    this.userInfo();
+                },
+                methods: {
+                    //用户信息
+                    reloadGold: function () {
+
+                        var package_name = this.package_name;
+                        var username = this.user_name;
+                        var user_id = this.user_id;
+                        axios.get('/userInfo?package_name='+package_name+"&user_id="+user_id+
+                            "&user_name="+username).then(function (res) {
+                            if(res.data.status=='1'){
+                                var gold = res.data.data.coins_balance;
+                                app.gold = gold;
+                            }
+
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    },
+                    //用户信息
+                    userInfo: function () {
+                        $('#loading').modal('show');
+                        var package_name = this.package_name;
+                        var username = this.user_name;
+                        var user_id = this.user_id;
+                        axios.get('/userInfo?package_name='+package_name+"&user_id="+user_id+
+                            "&user_name="+username).then(function (res) {
+                            if(res.data.status=='1'){
+                            var gold = res.data.data.coins_balance;
+                            var user_name = res.data.data.user_name;
+                            app.gold = gold;
+                            app.user_name=user_name;
+                            app.likesInfo();
+                            }else{
+                                app.likesListArr="";
+                                app.result_buy=res.data.info
+                                $('#tipMoal').show();
+                            }
+                            $('#loading').modal('hide');
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    },
+                    //金币不足点击Ok提示app
+                    noGold:function(info){
+                        app.colseModal('ok');
+                     if(info=="1"){
+                        app.no_Gold_Tag="";
+                         //通知APP
+                         var message = {
+                             'name': 'store',
+                         };
+                         window.webkit.messageHandlers.webViewApp.postMessage(message);
+                     }
+
+                    }
+                    ,
+
+                    //帖子信息
+                    likesInfo: function () {
+                        var package_name = this.package_name;
+                        var username = this.user_name;
+                        var user_id = this.user_id;
+                        axios.get('/likesInfo?package_name=' + package_name + "&user_id=" + user_id +
+                            "&user_name=" + username).then(function (res) {
+                            if(res.data.status=='1'){
+                            var data = res.data.data;
+                            app.max_id = data[data.length - 1].max_id;
+                                for (var i=0;i<data.length;i++)
+                                {
+                                    data[i].ifLength=0
+                                    if(data[i].video_view_count.length>=5){
+                                     data[i].ifLength=1
+                                    }
+
+                                }
+
+                            app.likesListArr = data;
+                            }else{
+                                app.likesListArr="";
+                                app.result_buy=res.data.info
+                                $('#tipMoal').show();
+                            }
+
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    },
+                    //加载更多的post
+                    loadMorePage: function () {
+                        var package_name = this.package_name;
+                        var username = this.user_name;
+                        var user_id = this.user_id;
+                        axios.get('/loadMorePage?package_name=' + package_name + "&user_id=" + user_id +
+                            "&user_name=" + username).then(function (res) {
+                            if (res.data.status == '1') {
+                                var data =JSON.parse(res.data.data);
+                                app.max_id = data[data.length - 1].max_id;
+                                for (var i=0;i<data.length;i++)
+                                {
+                                    data[i].ifLength=0
+                                    if(data[i].video_view_count.length>=5){
+                                        data[i].ifLength=1
+                                    }
+
+                                }
+                                app.likesListArr = [...app.likesListArr, ...data];
+                            }else if(res.data.status == '2') {
+
+                            }else{
+                                app.result_buy=res.data.info
+                                $('#tipMoal').show();
+                            }
+
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    },
+                        //APP点击获取滚动
+                    needLoadMore :function(){
+                            var message = {
+                                'name': 'loadMore',
+                                'post_id': app.max_id,
+                            };
+                            window.webkit.messageHandlers.webViewApp.postMessage(message);
+
+                    },
+
+                    //打开金币列表模态框
+                    openModel: function (media) {
+                        $('#goldModal').show();
+                        $('#gold_model_likes').show();
+                        $('#gold_model_views').hide();
+                       app.model_url=media.url;
+                       app.model_likes=media.likes;
+                       app.model_video_view_count=media.video_view_count;
+                       app.model_comments=media.comments;
+                       app.model_type=media.type;
+                       app.model_shortcode=media.shortcode;
+                       app.model_mediaId=media.id;
+                       app.click_type='2';
+                       app.likesStore(media);
+                    },
+                    //显示服务金币
+                    likesStore:function(media){
+                        $('#loading').modal('show');
+                            var package_name = this.package_name;
+                            var type = '2'
+                            axios.get('/serviceList?package_name='+package_name+"&type="+type).then(function (res) {
+                                if(res.data.status=='1'){
+                                var followerListArr1 = res.data.data;
+                                app.likesStoreList = followerListArr1;
+                                $('#loading').modal('hide');
+                                }else{
+                                    app.likesStoreList="";
+                                    app.result_buy=res.data.info
+                                    $('#tipMoal').show();
+                                    $('#loading').modal('hide');
+                                }
+                            }).catch(function (error) {
+                                console.log(error);
+                            });
+
+                    },
+                    //存放服务金币的信息
+                    getGoldId:function(good){
+                        app.goodsNumber=good.goods_quantity;
+                        app.goodQuatity=good.gold_quantity;
+                        app.good_id = good.service_id;
+                         if(app.model_type=="video"){
+                             if(app.if_model_title=='1'){
+                                 app.model_title="Likes";
+                             }else{
+                             app.model_title="Views"
+                             }
+                         }else{
+                        app.model_title="Likes";
+                        }
+                        $('#yesOrNoModel').show();
+                    },
+
+
+                    likesSHowOrHide:function(){
+                        $('#gold_model_likes').show();
+                        $('#gold_model_views').hide();
+                        app.if_model_title='1';
+                        app.click_type='2';
+                    },
+                    viewsSHowOrHide:function(){
+                        $('#loading').modal('show');
+                        app.if_model_title='2';
+                        $('#gold_model_views').show();
+                        $('#gold_model_likes').hide();
+                        var package_name = this.package_name;
+                        if(app.model_type=='video') {
+                            var type = '3';
+                            app.click_type='3';
+                            axios.get('/serviceList?package_name=' + package_name + "&type=" + type).then(function (res) {
+
+                                if(res.data.status=='1'){
+                                var followerListArr1 = res.data.data;
+                                app.viewsStoreList = followerListArr1;
+                                $('#loading').modal('hide');
+                                }
+                                else {
+                                app.viewsStoreList="";
+                                app.result_buy=res.data.info
+                                $('#tipMoal').show();
+                                $('#loading').modal('hide');
+                                }
+                            }).catch(function (error) {
+                                console.log(error);
+                            });
+                        }else{
+                            app.viewsStoreList = "";
+                            $('#loading').modal('hide');
+                        }
+
+                    },
+
+                    //购买服务
+                    getLikes:function() {
+                        app.colseModal('yes');
+                        $('#loading').modal('show');
+                        if (this.gold*1 < this.goodQuatity*1) {
+                            app.no_Gold_Tag="1";
+                            app.result_buy="Insufficient coins, please recharge and purchase";
+                            $('#tipMoal').show();
+                            $('#loading').modal('hide');
+
+                        }
+                        else{
+                            axios.get('/buyService?package_name=' + this.package_name + "&good_id=" + this.good_id + "&user_id=" + this.user_id+"&shortcode="+this.model_shortcode+"&src="+this.model_url
+                                +"&mediaId="+this.model_mediaId).then(function (res) {
+                                var result = res.data;
+                                if (result.status == '1') {
+                                    app.result_buy=result.info;
+                                    $('#tipMoal').show();
+                                    app.gold = result.data.coins_balance;
+                                    $('#loading').modal('hide');
+                                    //通知APP
+                                     var message = {
+                                         'name': 'purchased',
+                                         'coins_balance': app.gold,
+                                         'type':app.click_type,
+                                     };
+                                     window.webkit.messageHandlers.webViewApp.postMessage(message);
+                                }else{
+                                    app.result_buy=result.info;
+                                    if(result.info=="Insufficient coins, please recharge and purchase"){
+                                        app.no_Gold_Tag="1";
+                                    }else if(result.info=="The account is abnormal, please contact us by email"){
+                                        app.no_Gold_Tag="2";
+                                    }
+                                    $('#tipMoal').show();
+                                    $('#loading').modal('hide');
+                                }
+                            }).catch(function (error) {
+                                console.log(error);
+                            });
+                        }
+
+
+                    },
+                    colseModal:function (info) {
+                        if(info=='no'){
+                            $("#yesOrNoModel").hide();
+                        }else if(info=='yes'){
+                            $("#yesOrNoModel").hide();
+                        }
+                        else if(info=='ok'){
+                            $("#tipMoal").hide();
+                        }
+                        else if(info=='x'){
+                            $("#goldModal").hide();
+                        }
+                    }
+            }
+
+            })
+
+        </script>
+
+</body>
+</html>

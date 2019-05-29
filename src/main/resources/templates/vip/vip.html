@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Vip</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/loading.css" rel="stylesheet">
+    <link href="../css/ifTip.css" rel="stylesheet">
+    <link href="../css/warningTip.css" rel="stylesheet">
+    <script src="../js/jquery-2.0.3.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <link href="../css/vip/vip.css" rel="stylesheet">
+</head>
+
+<style>
+
+</style>
+
+<body>
+<div id="vip" class="vip_div">
+    <ul id="myTab" class="nav nav-tabs">
+        <li class="active">
+            <a href="#super" data-toggle="tab">
+                super
+            </a>
+        </li>
+        <li>
+            <a href="#followers" data-toggle="tab">
+                Followers
+            </a>
+        </li>
+        <li>
+            <a href="#likes" data-toggle="tab">
+                Likes
+            </a>
+        </li>
+    </ul>
+    <div class="info_div">
+    <div id="myTabContent" class="tab-content tab_div">
+        <div class="commom_img_div">
+            <img src="../img/vip/vipSuper.png" class="commom_img">
+        </div>
+        <div class="tab-pane fade in active" id="super">
+            <div class="super_top">
+            </div>
+            <div>1-1</div>
+            <div></div>
+        </div>
+        <div class="tab-pane fade" id="followers">
+            <div class="followers_top"></div>
+            <div>2-1</div>
+            <div></div>
+        </div>
+        <div class="tab-pane fade" id="likes">
+            <div class="likes_top"></div>
+            <div>3-1</div>
+            <div></div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+    <!-- loading 开始 -->
+    <div class="modal fade loading_div"  id="loading"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop='static'>
+        <div class="modal-body loading_text">
+            <img src="../img/loading.gif">
+        </div>
+    </div>
+    <!-- loading 结束-->
+
+</div>
+<script>
+
+ var  vip= new Vue({
+               el:'#vip',
+              data:{
+                  user_name:'',
+                  user_id:'',
+                  package_name:'',
+                  gold:'',
+              },
+     created: function () {
+         //初始化参数
+         var str = window.location.search;
+         str = str.replace('?', '');
+         var params = str.split('&');
+         var requests = {}
+
+         for (var i = 0; i < params.length; i++) {
+             if (params[i].indexOf("=")) {
+                 var tmp = params[i].split("=");
+                 requests[tmp[0]] = tmp[1];
+             }
+         }
+         // 返回 undefinde 说明没有对应的key
+         // 返回 '' 说明对应的值为空 但是有 key
+         this.package_name = requests['package_name'];
+         this.user_id = requests['user_id'];
+         this.user_name = requests['user_name'];
+     },
+
+     mounted: function () {
+         this.userInfo();
+     },
+     methods:{
+
+         //刷新金币
+         reloadGold: function () {
+             var package_name = this.package_name;
+             var username = this.user_name;
+             var user_id = this.user_id;
+             axios.get('/userInfo?package_name='+package_name+"&user_id="+user_id+
+                 "&user_name="+username).then(function (res) {
+                 if(res.data.status=='1'){
+                     vip.gold = res.data.data.coins_balance;
+                 }
+             }).catch(function (error) {
+                 console.log(error);
+             });
+         },
+
+         //用户信息
+         userInfo: function () {
+             $('#loading').modal('show');
+             var package_name = this.package_name;
+             var username = this.user_name;
+             var user_id = this.user_id;
+             axios.get('/userInfo?package_name='+package_name+"&user_id="+user_id+
+             "&user_name="+username).then(function (res) {
+                 if(res.data.status=='1'){
+                 vip.user_name = res.data.data.user_name;
+                 vip.gold = res.data.data.coins_balance;;
+                 }else{
+
+                 }
+                 $('#loading').modal('hide');
+             }).catch(function (error) {
+                 console.log(error);
+             });
+         }
+
+
+
+     }
+
+ })
+
+</script>
+
+</body>
+</html>
