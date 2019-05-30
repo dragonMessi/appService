@@ -76,25 +76,8 @@
 
     <div  class="div_gold_info">
         <ul class="list-group">
-            <li  v-cloak class="list-group-item  div_gold first-child" v-for='item in followerListArr1'>
-               <div @click="getGoldId(item)">
-                    <span class="div_gold_span" data-toggle="modal">
-                      <img src="img/gold.png" class="img_gold">
-                        {{item.gold_quantity}}
-                    </span>
-                    <img src="img/bicon.png"class="img_people">
-                    <span class="img_people_interval">
-                    +{{item.goods_quantity}} Followers
-                    </span>
-                    <span v-if="item.is_hot==1">
-                        <img src="img/hot.png"class="img_hot">
-                    </span>
-               </div>
-            </li>
-
-
-            <li class="list-group-item  div_gold first-child initialOpen">
-                <div>
+            <li class="list-group-item  div_gold first-child">
+                <div @click="getGoldId('67289E2B0BDD40C3A2896AEB66C80C97','10','100')">
                     <span class="div_gold_span" data-toggle="modal">
                       <img src="img/gold.png" class="img_gold">
                         100
@@ -106,8 +89,8 @@
                 </div>
             </li>
 
-            <li class="list-group-item  div_gold first-child initialOpen">
-                <div>
+            <li class="list-group-item  div_gold first-child">
+                <div @click="getGoldId('D421B594E099489784AE0A6D8219194B','50','500')">
                     <span class="div_gold_span" data-toggle="modal">
                       <img src="img/gold.png" class="img_gold">
                        500
@@ -119,8 +102,8 @@
                 </div>
             </li>
 
-            <li class="list-group-item  div_gold first-child initialOpen">
-                <div>
+            <li class="list-group-item  div_gold first-child">
+                <div  @click="getGoldId('7F55167B783242AFB9B6280C3E4A8D7E','110','1000')">
                     <span class="div_gold_span" data-toggle="modal">
                       <img src="img/gold.png" class="img_gold">
                         1000
@@ -135,8 +118,8 @@
                 </div>
             </li>
 
-            <li class="list-group-item  div_gold first-child initialOpen">
-                <div>
+            <li class="list-group-item  div_gold first-child">
+                <div @click="getGoldId('18773903C64E448DB9EFA26EDCF46669','500','5000')">
                     <span class="div_gold_span" data-toggle="modal">
                       <img src="img/gold.png" class="img_gold">
                         5000
@@ -148,8 +131,8 @@
                 </div>
             </li>
 
-            <li class="list-group-item  div_gold first-child initialOpen">
-                <div>
+            <li class="list-group-item  div_gold first-child">
+                <div @click="getGoldId('463A1BE486BE4E7090CF923007CCFC51','1200','10000')">
                     <span class="div_gold_span" data-toggle="modal">
                       <img src="img/gold.png" class="img_gold">
                         10000
@@ -164,8 +147,8 @@
                 </div>
             </li>
 
-            <li class="list-group-item  div_gold first-child initialOpen">
-                <div>
+            <li class="list-group-item  div_gold first-child">
+                <div @click="getGoldId('0894FB70302E4D89A90A5DB65CA46F29','5000','50000')">
                     <span class="div_gold_span" data-toggle="modal">
                       <img src="img/gold.png" class="img_gold">
                         50000
@@ -257,6 +240,13 @@
 <script src="js/h5/carousel.js"></script>
 <script>
 
+
+  $(function () {
+      $('#loading').modal('show');
+  })
+
+
+
     //刷新页面
     function reloadPage() {
         app.userInfo();
@@ -305,6 +295,7 @@
 
      mounted: function () {
          this.userInfo();
+         this.setupScrollLabelInfo()
      },
      methods:{
 
@@ -326,7 +317,6 @@
 
          //用户信息
          userInfo: function () {
-             $('#loading').modal('show');
              var package_name = this.package_name;
              var username = this.user_name;
              var user_id = this.user_id;
@@ -343,11 +333,7 @@
                  app.profile_pic_url = profile_pic_url;
                  app.gold = gold;
                  app.user_name=user_name;
-                 app.followerServiceInfo();
-                 app.setupScrollLabelInfo()
-                 $('.initialOpen').hide();
                  }else{
-                     app.followerListArr1="";
                      app.result_buy=res.data.info
                      $('#tipMoal').show();
                  }
@@ -356,30 +342,12 @@
                  console.log(error);
              });
          },
-         //服务列表
-         followerServiceInfo: function () {
-             var package_name = this.package_name;
-             var type = "1";
-             axios.get('/serviceList?package_name='+package_name+"&type="+type).then(function (res) {
-                 if(res.data.status=='1'){
-                 var followerListArr1 = res.data.data;
-                 app.followerListArr1 = followerListArr1;
-                 }else{
-                     app.followerListArr1="";
-                     app.result_buy=res.data.info
-                     $('#tipMoal').show();
-                 };
-
-             }).catch(function (error) {
-                 console.log(error);
-             });
-         },
 
 
-         getGoldId:function(good){
-              app.goodsNumber=good.goods_quantity;
-              app.goodQuatity=good.gold_quantity;
-              app.good_id = good.service_id;
+         getGoldId:function(good_Id,good_Mumber,good_Price){
+              app.goodsNumber=good_Mumber;
+              app.goodQuatity=good_Price;
+              app.good_id = good_Id;
              $('#myModal').show();
          },
 
