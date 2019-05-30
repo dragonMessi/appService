@@ -39,8 +39,8 @@ import com.opensymphony.util.TextUtils;*/
 public class StringUtil {
     private static final String IV_STRING = "johnnymrvicaabcd";// johnny0419mrvica
     private static final String KEYASE = "likeeatfoodteama";// 解密的KEY
-    public static String urlOne = "http://febphoto.com/ios/restFull/";
-    public static String urlTwo = "http://febphoto.com/ios/restFulVersionTwo/";
+    public static String urlOne = "http://127.0.0.1/ios/restFull/";
+    public static String urlTwo = "http://127.0.0.1/ios/restFulVersionTwo/";
     private static Pattern numericPattern = Pattern.compile("^[0-9\\-]+$");
     private static Pattern integerPattern = Pattern.compile("^[0-9]+$");
     private static Pattern numericStringPattern = Pattern.compile("^[0-9\\-\\-]+$");
