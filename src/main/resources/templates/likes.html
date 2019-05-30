@@ -7,119 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>likes</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/ifTip.css" rel="stylesheet">
-    <link href="css/warningTip.css" rel="stylesheet">
-    <link href="css/loading.css" rel="stylesheet">
+    <link href="css/likes.css" rel="stylesheet">
 </test>
 
 <style>
-.likes_img{
-    width: 10rem;height:10rem;
 
-}
-.likes_img_Under{
-    width: 1.6rem;height:1.6rem;
-}
-
-    .body_div{
-      text-align: center;
-
-    }
-    .likes_img_head{
-        width:7rem;height: 7rem
-    }
-.img_people{
-    width:2rem;height: 2rem;
-}
-
-.img_people_interval{
-    position: relative;left: 1.5rem;
-}
-.img_gold{
-    width:2rem;height: 2rem
-}
-.loading_model{
-    text-align: center;
-    height: 100%;
-}
-
-
-    .modal_data_show{
-        width: 65%;position:relative;left:9.6rem;top:-6rem
-    }
-    .div_gold{
-        background-color:#E2F2FF;
-        border-radius:1rem!important;
-        margin-bottom: 0.3rem;
-        font-size: 18px;
-        border:none;
-    }
-.img_hot{
-    width:2.5rem;height: 2.5rem;
-    position: relative;left: 2.9rem;
-}
-.div_title{
-    text-align: center;
-    font-weight: bold;
-    height: 3rem;
-    margin-top: 1.5rem;
-}
-   .div_gold_span{
-        float: right;
-        color: #E797C2;
-    }
-.modal-backdrop {
-    opacity: 0 !important;
-    filter: alpha(opacity=0) !important;
-}
-    .gold_VIEWS_span{
-        color: #3582F0;
-    }
-.gold_likes_span{
-    color: #3582F0;
-}
-    .gold_likes_views_div{
-        font-size: 23px;
-        height: 4.5rem;
-        text-align: center;
-    }
-    .gold_btn_div{
-        text-align: center;
-        border: none;
-        padding: 0px!important;
-    }
-    .gold_btn{
-        border: none;
-    }
-    .gold_btn img{
-        width: 1.5rem;
-        height: 1.5rem;
-    }
-    .modal-body{
-        padding: 0px!important;
-    }
-
-* {
-    -webkit-touch-callout:none;
-    -webkit-user-select:none;
-    -khtml-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
-}
-#goldModal {
-position: absolute;top: 6%;
-    width: 90%;
-}
-    .common_likes_span{
-     position: relative;right: 2rem;
-    }
-    .common_views_span{
-    position: relative;left: 2rem;
-}
-    #yesOrNoModel{
-        z-index:20;
-    }
 [v-cloak] {
     display: none;
 }
@@ -127,7 +19,7 @@ position: absolute;top: 6%;
 
 <body>
 <div>
-    <div id="likes" class="container" v-cloak>
+    <div id="likes" class="container">
         <div class="div_title">Choose photo/video to get likes/views</div>
         <div class="row body_div">
          <div class="col-xs-4" v-for='item in likesListArr' style="padding-right:0.1rem!important;padding-left:0.1rem!important;">
@@ -137,14 +29,14 @@ position: absolute;top: 6%;
              </span>
             </div>
              <div>
-                  <span>
+                  <span v-cloak>
                         <IMG src="img/like.png" class="likes_img_Under">
                         <span v-if="item.ifLength=='0'">{{item.likes}}</span>
                         <span v-if="item.ifLength=='1'" style="font-size: 9px">{{item.likes}}</span>
                     </span>
 
 
-                <span v-if="item.video_view_count>0">
+                <span  v-cloak v-if="item.video_view_count>0">
                       <IMG src="img/eye.png" class="likes_img_Under">
                       <span v-if="item.ifLength=='0'">{{item.video_view_count}}</span>
                       <span v-if="item.ifLength=='1'"style="font-size: 9px">{{item.video_view_count}}</span>
@@ -166,7 +58,7 @@ position: absolute;top: 6%;
 
 
                        <!--Likes -->
-                    <div class="modal-body" id="gold_model_likes">
+                    <div class="modal-body" id="gold_model_likes" v-cloak>
                         <div class="gold_likes_views_div">
                             <span class="gold_likes_span common_likes_span" >Get Likes</span>
                             <span  @click="viewsSHowOrHide()" class="common_views_span"  style="color: #99CFFC">Get Views</span>
