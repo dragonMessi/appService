@@ -7,9 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Followers</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/loading.css" rel="stylesheet">
-    <link href="css/ifTip.css" rel="stylesheet">
-    <link href="css/warningTip.css" rel="stylesheet">
     <link href="css/followers.css" rel="stylesheet">
 </head>
 
@@ -291,11 +288,13 @@
          this.package_name = requests['package_name'];
          this.user_id = requests['user_id'];
          this.user_name = requests['user_name'];
+         this.userInfo();
+         this.setupScrollLabelInfo()
      },
 
      mounted: function () {
-         this.userInfo();
-         this.setupScrollLabelInfo()
+
+
      },
      methods:{
 

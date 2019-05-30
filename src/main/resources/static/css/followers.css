@@ -87,3 +87,78 @@
     -ms-user-select:none;
     user-select:none;
 }
+
+/**ifTip**/
+
+.if_model_h4{
+    text-align: center;
+    color: #FF51A1;
+    font-style: italic;
+}
+.if_btn_cancle{
+    float: right;
+    width: 8rem!important;
+    background-color: #FF8EC1!important;
+    border: none!important;
+    border-radius:0.5rem!important;
+    color: white;
+    position: relative;right: 2rem;
+}
+.if_btn_ok{
+    float: left!important;
+    width: 8rem!important;
+    background-color: #FF8EC1!important;
+    border-radius:0.5rem!important;
+    border: none!important;
+    color: white;
+    position: relative;left: 2rem;
+}
+.if_model_head{
+    border:none!important;
+}
+.if_model_foot{
+    border:none!important;
+}
+.if_model_text{
+    text-align: center;
+    font-size: 15px;
+    color: 666666;
+}
+.if_mode_all{
+    border-radius:3rem!important;
+    border: none!important;
+    position: absolute;left: 9%; top:30%;
+    width: 80%;
+    z-index: 900;
+}
+
+
+/**loading**/
+.loading_div{
+    width: 100%;
+    height: 100%;
+}
+.loading_text{
+    z-index:9999;
+    position: relative;top:37%;
+    left: 35%;
+}
+
+
+
+/**warning**/
+.warning_btn_ok{
+    width: 8rem!important;
+    background-color: #FF8EC1!important;
+    border-radius:0.5rem!important;
+    border: none!important;
+    color: white;
+}
+.warning_model_foot{
+    text-align: center;
+    border: none!important;
+}
+#tipMoal{
+    position: absolute;top:30%;
+
+}
