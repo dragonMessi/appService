@@ -7,7 +7,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 //@SpringBootApplication
-//@EnableSwagger2
 //@EnableConfigurationProperties
 //@EnableScheduling
 //public class StartApplication extends SpringBootServletInitializer {
@@ -25,7 +24,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 //}
 
 @SpringBootApplication
-@EnableSwagger2
 @EnableConfigurationProperties
 @EnableScheduling
 public class StartApplication {
