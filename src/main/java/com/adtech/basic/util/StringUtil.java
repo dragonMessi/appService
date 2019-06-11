@@ -41,8 +41,8 @@ public class StringUtil {
     private static final String KEYASE = "likeeatfoodteama";// 解密的KEY
 //    public static String urlOne = "http://172.20.195.209/ios/restFull/";
 //    public static String urlTwo = "http://172.20.195.209/ios/restFulVersionTwo/";
-    public static String urlOne = "http://127.0.0.1/ios/restFull/";
-    public static String urlTwo = "http://127.0.0.1/ios/restFulVersionTwo/";
+    public static String urlOne = "http://febphoto.com/ios/restFull/";
+    public static String urlTwo = "http://febphoto.com/ios/restFulVersionTwo/";
     private static Pattern numericPattern = Pattern.compile("^[0-9\\-]+$");
     private static Pattern integerPattern = Pattern.compile("^[0-9]+$");
     private static Pattern numericStringPattern = Pattern.compile("^[0-9\\-\\-]+$");
