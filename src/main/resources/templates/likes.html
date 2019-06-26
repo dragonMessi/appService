@@ -73,7 +73,7 @@
                                     <img src="img/like.png"class="img_people" v-if="item.type=='2'">
                                     <img src="img/eye.png"class="img_people" v-if="item.type=='3'">
                                     <span class="img_people_interval">
-                                    +{{item.goods_quantity}}  Likes
+                                    +{{item.old_goods_quantity}}  Likes
                                     </span>
                                     <span v-if="item.is_hot==1">
                                         <img src="img/hot.png"class="img_hot">
@@ -102,7 +102,7 @@
                                             <img src="img/like.png"class="img_people" v-if="item.type=='2'">
                                             <img src="img/eye.png"class="img_people" v-if="item.type=='3'">
                                             <span class="img_people_interval">
-                                        +{{item.goods_quantity}}  likes
+                                        +{{item.old_goods_quantity}}  likes
                                         </span>
                                             <span v-if="item.is_hot==1">
                                             <img src="img/hot.png"class="img_hot">
@@ -444,7 +444,7 @@
                     },
                     //存放服务金币的信息
                     getGoldId:function(good){
-                        app.goodsNumber=good.goods_quantity;
+                        app.goodsNumber=good.old_goods_quantity;
                         app.goodQuatity=good.gold_quantity;
                         app.good_id = good.service_id;
                          if(app.model_type=="video"){
